@@ -17,13 +17,13 @@ export default function App() {
                     initialRouteName="Home"
                     screenOptions={{
                         headerStyle: {
-                            backgroundColor: '#1e40af',
+                            backgroundColor: '#110808',
                         },
                         headerTintColor: '#fff',
                         headerTitleStyle: {
                             fontWeight: 'bold',
                         },
-                        drawerActiveTintColor: '#1e40af',
+                        drawerActiveTintColor: '#ad1e1e',
                         drawerActiveBackgroundColor: '#dbeafe',
                         drawerInactiveTintColor: '#334155',
                         drawerLabelStyle: {
