@@ -4,7 +4,7 @@ export default function DetalhesScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.emoji}>👷</Text>
-            <Text style={styles.text}>404 Not Found</Text>
+            <Text style={styles.text}>404 Construção</Text>
             <Text style={styles.subtitle}>Ainda em constução</Text>
             <Text style={styles.proposta}>Se você é da equipe, crie essa pagina!</Text>
         </View>
