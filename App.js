@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import HomeScreen from './src/screens/HomeScreen';
+import DetalhesScreen from './src/screens/DetalhesScreen';
+import ContatoScreen from './src/screens/ContatoScreen';
+import SobreScreen from './src/screens/SobreScreen';
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <NavigationContainer>
+                <Drawer.Navigator
+                    initialRouteName="Home"
+                    screenOptions={{
+                        headerStyle: {
+                            backgroundColor: '#1e40af',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                        drawerActiveTintColor: '#1e40af',
+                        drawerActiveBackgroundColor: '#dbeafe',
+                        drawerInactiveTintColor: '#334155',
+                        drawerLabelStyle: {
+                            fontSize: 16,
+                            fontWeight: '500',
+                        },
+                        drawerStyle: {
+                            backgroundColor: '#f8fafc',
+                            width: 260,
+                        },
+                    }}>
+                    <Drawer.Screen name="Home" component={HomeScreen} />
+                    <Drawer.Screen name="Detalhes" component={DetalhesScreen} />
+                    <Drawer.Screen name="Contato" component={ContatoScreen} />
+                    <Drawer.Screen name="Sobre" component={SobreScreen} />
+                </Drawer.Navigator>
+            </NavigationContainer>
+        </GestureHandlerRootView>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
