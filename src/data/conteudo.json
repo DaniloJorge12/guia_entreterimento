@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "titulo": "High School Musical",
+    "info": "Troy e Gabriella quebram as regras e tentam o papel principal no musical da escola.",
+    "link_img": "",
+    "cat": "Filme Musical",
+    "tipo": "filme"
+  },
+  {
+    "id": "2",
+    "titulo": "Grey's Anatomy",
+    "info": "Médicos residentes enfrentam a rotina pesada no hospital Seattle Grace.",
+    "link_img": "",
+    "cat": "Série Médica",
+    "tipo": "serie"
+  },
+  {
+    "id": "3",
+    "titulo": "Friends",
+    "info": "Seis amigos vivem as aventuras da vida adulta em Nova York.",
+    "link_img": "",
+    "cat": "Sitcom",
+    "tipo": "serie"
+  }
+]

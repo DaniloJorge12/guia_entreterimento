@@ -1,88 +1,173 @@
-import React from "react";
-import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView} from "react-native";
-
-const FILMES = [
-  {
-    id: "1",
-    title: "Grey's Anathomy",
-    rating: "10",
-    image: require("../../assets/capas/grey.png"),
-    desc: "Grey é uma médica profissional, trabalha no Seatle Grace, junto com seus colegas.",
-  },
-  {
-    id: "2",
-    title: "Matrix",
-    rating: "8.7",
-    image: null,
-    desc: "Um hacker descobre a verdadeira natureza de sua realidade e seu papel na guerra contra os controladores dela...",
-  },
-  {
-    id: "3",
-    title: "Homem-Aranha: Através do Aranhaverso",
-    rating: "8.6",
-    image: null,
-    desc: "Miles Morales é catapultado através do multiverso, onde ele encontra uma equipe de Pessoas-Aranha encarregadas de proteger sua própria existência...",
-  }
-];
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Animated } from "react-native"; //Nosso grupo buscou como utilizar a biblioteca Animated
+import dados from "../data/conteudo.json";
+import { useAudioPlayer } from "expo-audio"; //Nosso grupo buscou como utilizar audio
 
 export default function HomeScreen({ navigation }) {
-  const renderFilme = ({ item }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate("Detalhes", { filme: item })}
-    >
-      <Image source={item.image} style={styles.cardImage} />
-      <View style={styles.cardContent}>
-        <Text style={styles.cardTitle}>{item.title}</Text>
-        <Text style={styles.cardRating}>⭐ {item.rating}</Text>
-      </View>
-    </TouchableOpacity>
+  const listaCompleta = dados;
+
+  const [animaFinalizada, setAnimaFinalizada] = useState(false);
+
+  const opacidadePisco = useRef(new Animated.Value(0.3)).current;
+  const posicaoY = useRef(new Animated.Value(0)).current;
+  const opacidadeGeral = useRef(new Animated.Value(1)).current;
+  const opacidadeHome = useRef(new Animated.Value(0)).current;
+
+  const player = useAudioPlayer(require("../../assets/abertura.mp3"));
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacidadePisco, { toValue: 1, duration: 600, useNativeDriver: true }),
+        Animated.timing(opacidadePisco, { toValue: 0.3, duration: 600, useNativeDriver: true })
+      ]),
+      { iterations: 2 }
+    ).start(() => {
+      
+      Animated.timing(opacidadePisco, { toValue: 1, duration: 100, useNativeDriver: true }).start();
+      
+      Animated.timing(posicaoY, {
+        toValue: -150,
+        duration: 800,
+        useNativeDriver: true
+      }).start(() => {
+        
+        setTimeout(() => {
+          Animated.timing(opacidadeGeral, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true
+          }).start(() => {
+            
+            setAnimaFinalizada(true);
+            Animated.timing(opacidadeHome, {
+              toValue: 1,
+              duration: 800,
+              useNativeDriver: true
+            }).start();
+
+          });
+        }, 800);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    player.play();
+  }, []);
+
+  const renderCabecalho = () => (
+    <View style={styles.cabecalhoContainer}>
+      <Image 
+        source={require("../../assets/logo.png")} 
+        style={styles.logo} 
+      />
+      <Text style={styles.tituloCategoria}>Todos os Títulos</Text>
+    </View>
   );
 
+  if (!animaFinalizada) {
+    return (
+      <View style={styles.telaAbertura}>
+        <Animated.View style={{ opacity: opacidadeGeral }}>
+          <Animated.Image
+            source={require("../../assets/logo.png")}
+            style={[
+              styles.logoAbertura,
+              {
+                opacity: opacidadePisco,
+                transform: [{ translateY: posicaoY }]
+              }
+            ]}
+          />
+        </Animated.View>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.headerTitle}>Destaques</Text>
+    <Animated.View style={[styles.fundo, { opacity: opacidadeHome }]}>
       <FlatList
-        data={FILMES}
+        data={listaCompleta}
         keyExtractor={(item) => item.id}
-        renderItem={renderFilme}
-        scrollEnabled={false}
+        ListHeaderComponent={renderCabecalho}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.caixa}
+            onPress={() => navigation.navigate("Detalhes", { obj: item })}
+          >
+            <Image source={{ uri: item.link_img }} style={styles.foto} />
+            <View style={styles.textoLado}>
+              <Text style={styles.nome}>{item.titulo}</Text>
+              <Text style={styles.infoTexto} numberOfLines={2}>{item.info}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
       />
-    </ScrollView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#121212", padding: 15 },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#E50914",
+  telaAbertura: {
+    flex: 1,
+    backgroundColor: "#110808", 
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoAbertura: {
+    width: 250,
+    height: 250,
+    resizeMode: "contain",
+  },
+
+  fundo: {
+    flex: 1,
+    backgroundColor: "#110808",
+    padding: 10,
+  },
+  cabecalhoContainer: {
+    alignItems: "center",
     marginBottom: 20,
+    marginTop: 10,
   },
-  card: {
-    backgroundColor: "#1e1e1e",
-    borderRadius: 8,
+  logo: {
+    width: 300,
+    height: 260,
+    resizeMode: "contain",
     marginBottom: 15,
-    overflow: "hidden",
+  },
+  tituloCategoria: {
+    color: "#E50914",
+    fontSize: 22,
+    fontWeight: "bold",
+    alignSelf: "flex-start",
+    marginLeft: 5,
+  },
+  caixa: {
+    backgroundColor: "#222",
+    marginBottom: 12,
     flexDirection: "row",
+    borderRadius: 8,
+    overflow: "hidden",
   },
-  cardImage: { 
-    width: 100, 
-    height: 150 
+  foto: {
+    width: 90,
+    height: 130,
   },
-  cardContent: { 
-    padding: 15, 
-    justifyContent: "center", 
-    flex: 1 
+  textoLado: {
+    padding: 10,
+    flex: 1,
+    justifyContent: "center",
   },
-  cardTitle: { 
-    color: "#fff", 
-    fontSize: 18, 
-    fontWeight: "bold" 
+  nome: {
+    color: "#fff",
+    fontSize: 17,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
-  cardRating: { 
-    color: "#FFD700", 
-    marginTop: 5 
-  },
+  infoTexto: {
+    color: "#ccc",
+    fontSize: 14,
+  }
 });
