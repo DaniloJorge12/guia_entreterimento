@@ -3,7 +3,7 @@
     "id": "1",
     "titulo": "High School Musical",
     "info": "Troy e Gabriella quebram as regras e tentam o papel principal no musical da escola.",
-    "link_img": "",
+    "link_img": "https://wallpapers.com/images/hd/elreparto-de-high-school-musical-se-reencuentra-en-el-escenario-70pv10zh7055t4kn.jpg",
     "cat": "Filme Musical",
     "tipo": "filme"
   },
@@ -11,7 +11,7 @@
     "id": "2",
     "titulo": "Grey's Anatomy",
     "info": "Médicos residentes enfrentam a rotina pesada no hospital Seattle Grace.",
-    "link_img": "",
+    "link_img": "https://www.laughingplace.com/w/wp-content/uploads/2020/09/abc-sets-premiere-dates-for-fall-2020-schedule-2.png",
     "cat": "Série Médica",
     "tipo": "serie"
   },
@@ -19,7 +19,7 @@
     "id": "3",
     "titulo": "Friends",
     "info": "Seis amigos vivem as aventuras da vida adulta em Nova York.",
-    "link_img": "",
+    "link_img": "https://wallpapercave.com/wp/wp8896785.jpg",
     "cat": "Sitcom",
     "tipo": "serie"
   }
