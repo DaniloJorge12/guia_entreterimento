@@ -47,7 +47,7 @@ export default function App() {
             headerTitleStyle: {
               fontWeight: 'bold',
             },
-            drawerActiveTintColor: '#E50914',
+            drawerActiveTintColor: '#7e2694',
             drawerActiveBackgroundColor: 'rgba(229, 9, 20, 0.15)', 
             drawerInactiveTintColor: '#ccc',
             drawerLabelStyle: {
