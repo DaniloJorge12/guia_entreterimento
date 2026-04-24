@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Animated } from "react-native"; //Nosso grupo buscou como utilizar a biblioteca Animated
-import dados from "../data/conteudo.json";
 import { useAudioPlayer } from "expo-audio"; //Nosso grupo buscou como utilizar audio
 
 export default function HomeScreen({ navigation }) {
-  const listaCompleta = dados;
+  const [listaCompleta, setListaCompleta] = useState([]);
 
   const [animaFinalizada, setAnimaFinalizada] = useState(false);
 
@@ -14,6 +13,12 @@ export default function HomeScreen({ navigation }) {
   const opacidadeHome = useRef(new Animated.Value(0)).current;
 
   const player = useAudioPlayer(require("../../assets/abertura.mp3"));
+
+  useEffect(() => {
+    fetch("https://api-filmes-vercel.vercel.app/api")
+      .then((resposta) => resposta.json())
+      .then((dados) => setListaCompleta(dados));
+  }, []);
 
   useEffect(() => {
     Animated.loop(
@@ -62,7 +67,7 @@ export default function HomeScreen({ navigation }) {
         source={require("../../assets/logo.png")} 
         style={styles.logo} 
       />
-      <Text style={styles.tituloCategoria}>Todos os Títulos</Text>
+      <Text style={styles.tituloCategoria}>Títulos Recomendados</Text>
     </View>
   );
 
@@ -111,7 +116,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   telaAbertura: {
     flex: 1,
-    backgroundColor: "#110808", 
+    backgroundColor: "#221633", 
     justifyContent: "center",
     alignItems: "center",
   },
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
 
   fundo: {
     flex: 1,
-    backgroundColor: "#110808",
+    backgroundColor: "#221633",
     padding: 10,
   },
   cabecalhoContainer: {
@@ -138,14 +143,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   tituloCategoria: {
-    color: "#E50914",
+    color: "white",
     fontSize: 22,
     fontWeight: "bold",
     alignSelf: "flex-start",
     marginLeft: 5,
   },
   caixa: {
-    backgroundColor: "#222",
+    backgroundColor: "#2b2855",
     marginBottom: 12,
     flexDirection: "row",
     borderRadius: 8,
