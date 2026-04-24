@@ -5,13 +5,12 @@ export default function SobreScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.logo} />
-      <Text style={styles.text}>Sobre o CineApp</Text>
       <Text style={styles.proposta}>
         Este aplicativo foi criado por uma equipe excepcional, focada em trazer
         flexibilidade e facilidade, tornando a consulta de filmes e series mais
         rápida para usuários casuais.
       </Text>
-      <Text style={styles.version}>Versão 1.0.0</Text>
+      <Text style={styles.version}>Versão 1.8.1</Text>
     </ScrollView>
   );
 }
@@ -25,15 +24,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: { 
-    width: 200, 
-    height: 100, 
+    width: 300, 
+    height: 200, 
     marginBottom: 20, 
     resizeMode: "contain" 
-  },
-  text: { 
-    fontSize: 28, 
-    fontWeight: "bold", 
-    color: "#E50914" 
   },
   proposta: {
     fontSize: 16,
